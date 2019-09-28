@@ -1,4 +1,3 @@
-    
 #!groovy
 //check js01 properties
 properties([disableConcurrentBuilds()])
