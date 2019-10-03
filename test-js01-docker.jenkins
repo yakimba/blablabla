@@ -17,7 +17,7 @@ pipeline {
                                       steps {
                                             echo "==============start building image=============="
                                             dir ('docker') {
-                                                      sh 'docker build -t docker:latest .'
+                                                      sh 'docker build -t germansnow/docker:latest .'
                                                       }
                                             }
                                          }
