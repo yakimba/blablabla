@@ -13,13 +13,35 @@ pipeline {
                    timestamps()
                    }
           stages {
+                  stage("docker login") {
+                                        steps {
+                                               echo " =========docker login========= "
+                                               withcredentials([usernamePassword(credentialsID: 'dockerhub_germansnow', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]){
+                                                              sh """
+                                                              docker login -u $USERNAME -p $PASSWORD
+                                                              """
+                                               }
+                                        }                                    
+                  }
                   stage("Create docker image") {
-                                      steps {
-                                            echo "==============start building image=============="
-                                            dir ('docker') {
-                                                      sh 'docker build -t germansnow/docker:latest .'
+                                               steps {
+                                                      echo "==============start building image=============="
+                                                      dir ('docker') {
+                                                                     sh 'docker build -t germansnow/docker:latest .'
                                                       }
-                                            }
-                                         }
-                                      }
-                                   }
+                                               }                                           
+                  }
+                   stage("Docker push"){
+                              steps {
+                                        echo "=========start pushing image========="
+                                        sh '''
+                                        docker push germansnow/docker:latest
+                                        '''
+                              }
+                    }
+                    
+          }
+}
+
+                                        
+       
